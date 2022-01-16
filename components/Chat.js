@@ -6,11 +6,14 @@ import { View, Text, Button } from 'react-native';
 export default class Chat extends React.Component {
     render() {
 
-        // Set the name that was entered on Start Screen to navigation title
+        // Get the name that was entered in on Start Screen (state 'name')
         let { name } = this.props.route.params;
+
+        // Set that name to the Navigation title (state)
         this.props.navigation.setOptions({title :name});
 
-        // Set the background color to what was selected from Start Screen (state)
+        // Get the bg color that was selected on Start Screen (state 'bgColor')
+        // And then assign that bg color to the main View component below
         const { bgColor } = this.props.route.params;
 
         return (
