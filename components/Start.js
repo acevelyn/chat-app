@@ -28,9 +28,10 @@ export default class Start extends React.Component {
     }
 
     colors = {
-        blue: 'blue',
-        pink: 'pink',
-        orange: 'orange'
+        black: '#090C08',
+        purple: '#474056',
+        blue: '#8A95A5',
+        green: '#B9C6AE'
     }
 
 
@@ -38,7 +39,7 @@ export default class Start extends React.Component {
         return (
             <View style={styles.container}>
                 <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-                <Text style={styles.title}>Welcome to My Chat App!</Text>
+                <Text style={styles.title}>Ev's Chat App!</Text>
                 <Text style={styles.text}>Enter your name and start chatting!</Text>
                 <TextInput
                     style={styles.input}
@@ -47,20 +48,24 @@ export default class Start extends React.Component {
                     onChangeText={(name) => this.setState({name})}/>
                 
                 <View style={styles.colorSelection}>
-                    <Text>Choose Background Color</Text>
+                    <Text style={styles.chooseText}>Choose Background Color</Text>
                     <View style={styles.colorList}>
 
                     <TouchableOpacity
-                        onPress={() => {this.changeBgColor(this.colors.blue)}}>
+                        onPress={() => {this.changeBgColor(this.colors.black)}}>
                         <View style={styles.color1}></View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => {this.changeBgColor(this.colors.pink)}}>
+                        onPress={() => {this.changeBgColor(this.colors.purple)}}>
                         <View style={[styles.color1, styles.color2]}></View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => {this.changeBgColor(this.colors.orange)}}>
+                        onPress={() => {this.changeBgColor(this.colors.blue)}}>
                         <View style={[styles.color1, styles.color3]}></View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {this.changeBgColor(this.colors.green)}}>
+                        <View style={[styles.color1, styles.color4]}></View>
                     </TouchableOpacity>
                     </View>
                 </View>
@@ -87,13 +92,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     title: {
-        fontSize: 25,
-        fontWeight: 'bold',
+        fontSize: 45,
+        color: '#FFFFFF',
+        fontWeight: '600',
         padding: 15
     },
-    text: {
-        fontSize: 17,
-        padding:5
+    chooseText: {
+        color:'#757083',
+        fontSize: 16,
+        fontWeight: '300',
+        padding: 5
     },
     image: {
         flex: 1,
@@ -101,14 +109,19 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     button: {
-        fontSize: 30
+        color: '#757085',
+        opacity: 100,
+        fontSize: 16,
+        fontWeight: '300',
     },
     input: {
         borderColor: 'gray',
         borderWidth: 1,
-        fontSize: 17,
+        fontSize: 16,
+        fontWeight:'300',
         height: 35,
         width: "85%",
+        opacity: 50
     },
     colorSelection: {
         backgroundColor: 'white',
@@ -126,12 +139,15 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 20,
         margin:5,
-        backgroundColor: 'blue'
+        backgroundColor: '#090C08',
     },
     color2: {
-        backgroundColor: 'pink',
+        backgroundColor: '#474056',
     },
     color3: {
-        backgroundColor: 'orange',
-    }
+        backgroundColor: '#8A95A5',
+    },
+    color4: {
+        backgroundColor: '#757083'
+    },
 })
