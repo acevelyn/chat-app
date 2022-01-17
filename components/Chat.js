@@ -4,7 +4,7 @@ import React from 'react';
 import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 
 // importing the Gifted Chat Library
-import { GiftedChat } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 
 export default class Chat extends React.Component {
     constructor() {
@@ -46,8 +46,21 @@ export default class Chat extends React.Component {
         }));
       }
 
-    render() {
+      renderBubble(props) {
+        return (
+          <Bubble
+            {...props}
+            wrapperStyle={{
+              right: {
+                backgroundColor: "#000",
+              },
+            }}
+          />
+        );
+      }
+    
 
+    render() {
         // Get the name that was entered in on Start Screen (state 'name')
         let { name } = this.props.route.params;
 
@@ -62,10 +75,11 @@ export default class Chat extends React.Component {
             <View style={{
                 flex:1, 
                 backgroundColor: bgColor ? bgColor : '#fff' }}>
-                <Text>Chat Screen</Text>
+                {/* <Text>Chat Screen</Text> */}
                 <View style={{flex:1}}>
 
                  <GiftedChat
+                    renderBubble={this.renderBubble.bind(this)}
                     messages={this.state.messages}
                     onSend={(messages) => this.onSend(messages)}
                     user={{

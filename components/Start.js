@@ -37,11 +37,21 @@ export default class Start extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View 
+                accessible={false}
+                accessibilityLabel="Chat App"
+                accessibilityHint="Title of the app"
+                accessibilityRole="App Header"
+                style={styles.container}
+            >
                 <ImageBackground source={image} resizeMode="cover" style={styles.image}>
                 <Text style={styles.title}>Ev's Chat App!</Text>
                 <Text style={styles.text}>Enter your name and start chatting!</Text>
                 <TextInput
+                    accessible={true}
+                    accessibilityLabel="Name entry"
+                    accessibilityHint="Lets you enter your name"
+                    accessibilityRole="Name entry" 
                     style={styles.input}
                     placeholder="Your Name"
                     value={this.state.name}
@@ -52,19 +62,35 @@ export default class Start extends React.Component {
                     <View style={styles.colorList}>
 
                     <TouchableOpacity
+                        accessible={true}
+                        accessibilityLabel="Color option Black"
+                        accessibilityHint="Set color black as your background"
+                        accessibilityRole="Color Selector"
                         onPress={() => {this.changeBgColor(this.colors.black)}}>
                         <View style={styles.color1}></View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => {this.changeBgColor(this.colors.purple)}}>
+                         accessible={true}
+                         accessibilityLabel="Color option Purple"
+                         accessibilityHint="Set color purple as your background"
+                         accessibilityRole="Color Selector"
+                         onPress={() => {this.changeBgColor(this.colors.purple)}}>
                         <View style={[styles.color1, styles.color2]}></View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => {this.changeBgColor(this.colors.blue)}}>
+                         accessible={true}
+                         accessibilityLabel="Color option Gray"
+                         accessibilityHint="Set color gray as your background"
+                         accessibilityRole="Color Selector"
+                         onPress={() => {this.changeBgColor(this.colors.blue)}}>
                         <View style={[styles.color1, styles.color3]}></View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => {this.changeBgColor(this.colors.green)}}>
+                         accessible={true}
+                         accessibilityLabel="Color option Light Purple"
+                         accessibilityHint="Set color light purple as your background"
+                         accessibilityRole="Color Selector"
+                         onPress={() => {this.changeBgColor(this.colors.green)}}>
                         <View style={[styles.color1, styles.color4]}></View>
                     </TouchableOpacity>
                     </View>
