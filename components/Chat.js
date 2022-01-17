@@ -29,7 +29,7 @@ export default class Chat extends React.Component {
                 },
                 {
                     _id: 2,
-                    text: 'This is a system message',
+                    text: ' has entered the chat',
                     createdAt: new Date(),
                     system: true,
                 },
@@ -65,7 +65,7 @@ export default class Chat extends React.Component {
         let { name } = this.props.route.params;
 
         // Set that name to the Navigation title (state)
-        this.props.navigation.setOptions({title :name});
+        this.props.navigation.setOptions({ title: name });
 
         // Get the bg color that was selected on Start Screen (state 'bgColor')
         // And then assign that bg color to the main View component below
@@ -75,9 +75,8 @@ export default class Chat extends React.Component {
             <View style={{
                 flex:1, 
                 backgroundColor: bgColor ? bgColor : '#fff' }}>
-                {/* <Text>Chat Screen</Text> */}
+                {/* <Text></Text> */}
                 <View style={{flex:1}}>
-
                  <GiftedChat
                     renderBubble={this.renderBubble.bind(this)}
                     messages={this.state.messages}

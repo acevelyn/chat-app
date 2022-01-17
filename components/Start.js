@@ -43,15 +43,11 @@ export default class Start extends React.Component {
                 accessibilityHint="Title of the app"
                 accessibilityRole="App Header"
                 style={styles.container}
-            >
+                >
                 <ImageBackground source={image} resizeMode="cover" style={styles.image}>
                 <Text style={styles.title}>Ev's Chat App!</Text>
                 <Text style={styles.text}>Enter your name and start chatting!</Text>
                 <TextInput
-                    accessible={true}
-                    accessibilityLabel="Name entry"
-                    accessibilityHint="Lets you enter your name"
-                    accessibilityRole="Name entry" 
                     style={styles.input}
                     placeholder="Your Name"
                     value={this.state.name}
