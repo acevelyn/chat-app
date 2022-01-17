@@ -41,7 +41,7 @@ export default class Start extends React.Component {
                 accessible={false}
                 accessibilityLabel="Chat App"
                 accessibilityHint="Title of the app"
-                accessibilityRole="App Header"
+                accessibilityRole="header"
                 style={styles.container}
                 >
                 <ImageBackground source={image} resizeMode="cover" style={styles.image}>
@@ -61,7 +61,7 @@ export default class Start extends React.Component {
                         accessible={true}
                         accessibilityLabel="Color option Black"
                         accessibilityHint="Set color black as your background"
-                        accessibilityRole="Color Selector"
+                        accessibilityRole="combobox"
                         onPress={() => {this.changeBgColor(this.colors.black)}}>
                         <View style={styles.color1}></View>
                     </TouchableOpacity>
@@ -69,7 +69,7 @@ export default class Start extends React.Component {
                          accessible={true}
                          accessibilityLabel="Color option Purple"
                          accessibilityHint="Set color purple as your background"
-                         accessibilityRole="Color Selector"
+                         accessibilityRole="combobox"
                          onPress={() => {this.changeBgColor(this.colors.purple)}}>
                         <View style={[styles.color1, styles.color2]}></View>
                     </TouchableOpacity>
@@ -77,7 +77,7 @@ export default class Start extends React.Component {
                          accessible={true}
                          accessibilityLabel="Color option Gray"
                          accessibilityHint="Set color gray as your background"
-                         accessibilityRole="Color Selector"
+                         accessibilityRole="combobox"
                          onPress={() => {this.changeBgColor(this.colors.blue)}}>
                         <View style={[styles.color1, styles.color3]}></View>
                     </TouchableOpacity>
@@ -85,7 +85,7 @@ export default class Start extends React.Component {
                          accessible={true}
                          accessibilityLabel="Color option Light Purple"
                          accessibilityHint="Set color light purple as your background"
-                         accessibilityRole="Color Selector"
+                         accessibilityRole="combobox"
                          onPress={() => {this.changeBgColor(this.colors.green)}}>
                         <View style={[styles.color1, styles.color4]}></View>
                     </TouchableOpacity>

@@ -7,7 +7,7 @@ import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 
 export default class Chat extends React.Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
             messages: [],
@@ -15,7 +15,12 @@ export default class Chat extends React.Component {
     }
 
     componentDidMount(){
+      // Set the page title to be the name that was passed in Start for chat
+      let { name } = this.props.route.params;
+
+      this.props.navigation.setOptions({ title: name })
         this.setState({
+
             messages: [
                 {
                     _id: 1,
@@ -23,13 +28,13 @@ export default class Chat extends React.Component {
                     createdAt: new Date(),
                     user: {
                         _id: 2,
-                        name: 'React Native',
+                        name: name,
                         avatar:'https://placeimg.com/140/140/any',
                     },
                 },
                 {
                     _id: 2,
-                    text: ' has entered the chat',
+                    text: `User has entered chat`,
                     createdAt: new Date(),
                     system: true,
                 },
@@ -61,12 +66,7 @@ export default class Chat extends React.Component {
     
 
     render() {
-        // Get the name that was entered in on Start Screen (state 'name')
-        let { name } = this.props.route.params;
-
-        // Set that name to the Navigation title (state)
-        this.props.navigation.setOptions({ title: name });
-
+      
         // Get the bg color that was selected on Start Screen (state 'bgColor')
         // And then assign that bg color to the main View component below
         const { bgColor } = this.props.route.params;
@@ -75,7 +75,7 @@ export default class Chat extends React.Component {
             <View style={{
                 flex:1, 
                 backgroundColor: bgColor ? bgColor : '#fff' }}>
-                {/* <Text></Text> */}
+                {/* <Text>Chat Room</Text> */}
                 <View style={{flex:1}}>
                  <GiftedChat
                     renderBubble={this.renderBubble.bind(this)}
