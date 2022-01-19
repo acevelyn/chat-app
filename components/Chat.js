@@ -15,6 +15,7 @@ export default class Chat extends React.Component {
         super();
         this.state = {
             messages: [],
+            uid: 0,
         };
 
         const firebaseConfig = {
@@ -61,11 +62,28 @@ export default class Chat extends React.Component {
     };
 
     componentDidMount(){
-      this.referenceChatMessages = firebase.firestore().collection('messages');
+      // this.referenceChatMessages = firebase.firestore().collection('messages')
+
+      this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        if (!user) {
+          firebase.auth().signInAnonymously();
+        }
+        this.setState({
+          uid: user.uid,
+          messages: [],
+        });
+        this.unsubscribe = this.referenceChatMessages.orderBy("createdAt", "desc").onSnapshot(this.onCollectionUpdate)
+      });
+
+      // create a reference to the active user's documents (shopping lists)
+      this.referenceChatUser = firebase.firestore().collection('messages').where("uid", "==", this.state.uid);
       // if (!this.referenceChatMessages) {
       //   alert('No messages available')
       // }
-      this.unsubscribe = this.referenceChatMessages.onSnapshot(this.onCollectionUpdate)
+
+      // listen for collection changes for current user
+      this.unsubscribeChatUser = this.referenceChatUser.onSnapshot(this.onCollectionUpdate);
+
       // Set the page title to be the name that was passed in Start for chat
       let { name } = this.props.route.params;
 
@@ -94,7 +112,10 @@ export default class Chat extends React.Component {
     }
     
     componentWillUnmount(){
-      this.unsubscribe();
+      // stop listening to authentication
+      this.authUnsubscribe();
+      // stop listening for changes
+      this.unsubscribeChatUser()
     }
 
     // A message that a user has just sent gets appended to the state messages
