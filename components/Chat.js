@@ -6,12 +6,32 @@ import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 // importing the Gifted Chat Library
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 
+const firebase = require('firebase');
+require('firebase/firestore');
+
 export default class Chat extends React.Component {
     constructor(props) {
         super();
         this.state = {
             messages: [],
+        };
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBMiWa2nMsYsSLAXlR9eJP8UiBsVItYrQA",
+            authDomain: "chat-app-268c2.firebaseapp.com",
+            projectId: "chat-app-268c2",
+            storageBucket: "chat-app-268c2.appspot.com",
+            messagingSenderId: "1033033644099",
+            appId: "1:1033033644099:web:8a37e1a8da5b15edf5bcf6",
+            measurementId: "G-MRHGXG3YW4"
         }
+
+        if(!firebase.apps.length) {
+          firebase.initializeApp(firebaseConfig)
+        }
+        this.referenceChatMessages = firebase.firestore().collection('messages');
+        // this.referenceChatUser = null;
+
     }
 
     componentDidMount(){
