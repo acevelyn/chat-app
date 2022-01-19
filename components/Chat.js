@@ -6,6 +6,7 @@ import { View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 // importing the Gifted Chat Library
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 
+
 const firebase = require('firebase');
 require('firebase/firestore');
 
@@ -34,7 +35,37 @@ export default class Chat extends React.Component {
 
     }
 
+    onCollectionUpdate = (querySnapshot) => {
+      const messages = [];
+      // go through each document
+      querySnapshot.forEach((doc) => {
+        // get the QueryDocumentSnapshot's data
+        let data = doc.data();
+        messages.push({
+          _id: data._id,
+          text: data.text,
+          createdAt: data.createdAt.toDate(),
+          user: data.user,
+        });
+      });
+      this.setState({ messages, })
+    };
+
+    addMessages(){
+      this.referenceChatMessages.add({
+        _id: 0,
+        text: 'textExample',
+        createdAt: new Date(),
+        user: 'userExample',
+      });
+    };
+
     componentDidMount(){
+      this.referenceChatMessages = firebase.firestore().collection('messages');
+      // if (!this.referenceChatMessages) {
+      //   alert('No messages available')
+      // }
+      this.unsubscribe = this.referenceChatMessages.onSnapshot(this.onCollectionUpdate)
       // Set the page title to be the name that was passed in Start for chat
       let { name } = this.props.route.params;
 
@@ -62,6 +93,9 @@ export default class Chat extends React.Component {
         })
     }
     
+    componentWillUnmount(){
+      this.unsubscribe();
+    }
 
     // A message that a user has just sent gets appended to the state messages
     // so that it can be displayed in that chat. 
