@@ -16,6 +16,7 @@ export default class Chat extends React.Component {
         this.state = {
             messages: [],
             uid: 0,
+            loggedInText: 'Please wait. You are getting logged in'
         };
 
         const firebaseConfig = {
@@ -32,8 +33,7 @@ export default class Chat extends React.Component {
           firebase.initializeApp(firebaseConfig)
         }
         this.referenceChatMessages = firebase.firestore().collection("messages");
-        // this.referenceChatUser = null;
-
+        this.referenceChatUser = null;
     }
 
     onCollectionUpdate = (querySnapshot) => {
@@ -46,36 +46,54 @@ export default class Chat extends React.Component {
           _id: data._id,
           text: data.text,
           createdAt: data.createdAt.toDate(),
-          user: data.user,
+          user: {
+              _id: data.user.id,
+              name: data.user.name,
+              avatar: data.user.avatar,
+          }
+          // user: data.user,
         });
       });
-      this.setState({ messages, })
+      this.setState({ messages,})
     };
 
     addMessages(){
+      const message = this.state.messages[0];
       this.referenceChatMessages.add({
-        _id: 0,
-        text: 'textExample',
-        createdAt: new Date(),
-        user: 'userExample',
+        _id: message._id,
+        text: message.text,
+        createdAt: message.createdAt,
+        user: this.state.user,
+        uid: this.state.uid,
       });
     };
 
     componentDidMount(){
-      // this.referenceChatMessages = firebase.firestore().collection('messages')
+      this.referenceChatMessages = firebase.firestore().collection('messages')
 
-      this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      // listen to authentication events
+      this.authUnsubscribe = firebase.auth().onAuthStateChanged(async(user) => {
         if (!user) {
-          firebase.auth().signInAnonymously();
+          return await firebase.auth().signInAnonymously();
         }
+        // update user state with current active data
         this.setState({
           uid: user.uid,
           messages: [],
+          user: {
+            _id: user._id,
+            name: name,
+            avatar: 'https://placeimg.com/140/140/any'
+
+          },
+          loggedInText: 'Your now logged in!'
         });
-        this.unsubscribe = this.referenceChatMessages.orderBy("createdAt", "desc").onSnapshot(this.onCollectionUpdate)
+        this.unsubscribe = this.referenceChatMessages
+          .orderBy("createdAt", "desc")
+          .onSnapshot(this.onCollectionUpdate)
       });
 
-      // create a reference to the active user's documents (shopping lists)
+      // create a reference to the active user's documents (messages)
       this.referenceChatUser = firebase.firestore().collection('messages').where("uid", "==", this.state.uid);
       // if (!this.referenceChatMessages) {
       //   alert('No messages available')
@@ -152,6 +170,7 @@ export default class Chat extends React.Component {
                 backgroundColor: bgColor ? bgColor : '#fff' }}>
                 {/* <Text>Chat Room</Text> */}
                 <View style={{flex:1}}>
+                  <Text>{this.state.loggedInText}</Text>
                  <GiftedChat
                     renderBubble={this.renderBubble.bind(this)}
                     messages={this.state.messages}
