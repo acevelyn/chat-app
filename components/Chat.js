@@ -16,6 +16,11 @@ export default class Chat extends React.Component {
         this.state = {
             messages: [],
             uid: 0,
+            user: {
+                _id: '',
+                name: '',
+                avatar: ''
+            }
         };
 
         const firebaseConfig = {
@@ -49,7 +54,7 @@ export default class Chat extends React.Component {
           user: data.user,
         });
       });
-      this.setState({ messages, })
+      this.setState({ messages: messages })
     };
 
     addMessages(){
@@ -58,7 +63,7 @@ export default class Chat extends React.Component {
         _id: message._id,
         text: message.text,
         createdAt: message.createdAt,
-        user: 'userExample',
+        user: this.state.user,
       });
     };
 
