@@ -32,7 +32,7 @@ export default class Chat extends React.Component {
           firebase.initializeApp(firebaseConfig)
         }
         this.referenceChatMessages = firebase.firestore().collection("messages");
-        // this.referenceChatUser = null;
+        this.referenceChatUser = null;
 
     }
 
@@ -53,10 +53,11 @@ export default class Chat extends React.Component {
     };
 
     addMessages(){
+      const message = this.state.messages[0]
       this.referenceChatMessages.add({
-        _id: 0,
-        text: 'textExample',
-        createdAt: new Date(),
+        _id: message._id,
+        text: message.text,
+        createdAt: message.createdAt,
         user: 'userExample',
       });
     };
@@ -71,6 +72,7 @@ export default class Chat extends React.Component {
         this.setState({
           uid: user.uid,
           messages: [],
+          user: { _id: user.uid}
         });
         this.unsubscribe = this.referenceChatMessages.orderBy("createdAt", "desc").onSnapshot(this.onCollectionUpdate)
       });
@@ -92,7 +94,7 @@ export default class Chat extends React.Component {
 
             messages: [
                 {
-                    _id: 1,
+                    uid: this.state.uid,
                     text: 'Hello developer',
                     createdAt: new Date(),
                     user: {
@@ -123,7 +125,9 @@ export default class Chat extends React.Component {
     onSend(messages = []) {
         this.setState((previousState) => ({
           messages: GiftedChat.append(previousState.messages, messages),
-        }));
+        }), () => { 
+            this.addMessages();
+        });
       }
 
       renderBubble(props) {
@@ -157,7 +161,7 @@ export default class Chat extends React.Component {
                     messages={this.state.messages}
                     onSend={(messages) => this.onSend(messages)}
                     user={{
-                    _id: 1,
+                    _id: this.state._id,
                     }}
                 />
 
