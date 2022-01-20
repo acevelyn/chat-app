@@ -1,10 +1,13 @@
 // The application’s main Chat component that renders the chat UI
-
+// importing React & React Native 
 import React from 'react';
 import { 
   View, 
   KeyboardAvoidingView, 
   Platform } from 'react-native';
+
+// importing AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // importing the Gifted Chat Library
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
@@ -93,9 +96,44 @@ export default class Chat extends React.Component {
         messages: GiftedChat.append(previousState.messages, messages),
       }), () => { 
           this.addMessages();
+          this.saveMessages();
       });
     }
 
+    // NEW saveMessages()
+    async saveMessages() {
+      try {
+        await AsyncStorage.setItem('messages', JSON.stringify(this.state.messages));
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    // NEW getMessages()
+    async getMessages() {
+      let messages = '';
+      try {
+        messages = await AsyncStorage.getItem('messages') || [];
+        this.setState({
+          messages: JSON.parse(messages)
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+
+    // NEW deleteMessages()
+    async deleteMessages() {
+      try {
+        await AsyncStorage.removeItem('messages');
+        this.setState({
+          messages: []
+        })
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
   
 
 
@@ -136,8 +174,8 @@ export default class Chat extends React.Component {
 
            // listen for collection changes for current user
       // this.unsubscribeChatUser = this.refMsgsUser.onSnapshot(this.onCollectionUpdate);
-
       });
+      this.getMessages(); // NEW getMessages()
     }
     
     componentWillUnmount(){
