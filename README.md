@@ -2,9 +2,10 @@
 A chat app for mobile devices using React Native. The app will provide users with a chat interface and options to share images and their location.
 
 ## Built on
-- ReactNative.js
+- React Native
 - React Native Gifted Chat
 - Expo 
+- Google Firebase / Cloud Storage for Firebase
 
 ## Tested on
 -  Andriod Studio / Andriod Simulator
@@ -14,7 +15,12 @@ A chat app for mobile devices using React Native. The app will provide users wit
 - React Native Navigation
 - React Native Navigation Stack
 - React Native Gifted Chat
-- Expo React Native Reanimated/Gesture Handler/Native Screens/Masked View
+- React Native Reanimated
+- React Native Gesture Handler
+- React Native Screens
+- React Native Masked View
+- React Native AsyncStorage
+- React Native NetInfo
 - Expo Permission
 - Expo ImagePicker
 - Expo Location
