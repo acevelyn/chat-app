@@ -48,7 +48,7 @@ export default class Start extends React.Component {
                 <Text style={styles.title}>Ev's Chat App!</Text>
                 <Text style={styles.text}>Enter your name and start chatting!</Text>
                 <TextInput
-                    style={styles.input}
+                    style={styles.inputBox}
                     placeholder="Your Name"
                     value={this.state.name}
                     onChangeText={(name) => this.setState({name})}/>
@@ -135,6 +135,18 @@ const styles = StyleSheet.create({
         opacity: 100,
         fontSize: 16,
         fontWeight: '300',
+    },
+    inputBox: {
+        fontSize: 22,
+        fontWeight: "800",
+        borderWidth: 4,
+        color: "#000000",
+        borderColor: "#757083",
+        width: "88%",
+        marginBottom: 20,
+        marginTop: 30,
+        textAlign: "center",
+        backgroundColor: "white",
     },
     input: {
         borderColor: 'gray',
